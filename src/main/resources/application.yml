@@ -1,11 +1,21 @@
-#设置服务器的端口号
-servser:
-  port:8080
-#数据库连接设置
+
 spring:
   datasource:
-    driver-class-name: com.mysql.cj.jdbc.Driver
-    url: jdbc:mysql://localhost:3306/sport?userSSL=false&serverTimezone=GMT
     username: root
-    password: gaoyue123
+    password: 123456
+    url: jdbc:mysql://127.0.0.1:3306/movement?serverTimezone=GMT
+    driver-class-name: com.mysql.cj.jdbc.Driver
     type: com.alibaba.druid.pool.DruidDataSource
+server:
+  port: 8081
+mybatis:
+  mapper-locations: classpath:mapper/*.xml
+  type-aliases-package: com.qfedu.sport.domain
+
+logging:
+  level:
+    com:
+      qfedu:
+        sport:
+          dao: debug
+
