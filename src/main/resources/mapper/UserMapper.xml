@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
 <mapper namespace="com.qfedu.sport.dao.UserMapper" >
-  <resultMap id="BaseResultMap" type="com.qfedu.sport.domin.User" >
+  <resultMap id="BaseResultMap" type="com.qfedu.sport.domain.User" >
     <id column="id" property="id" jdbcType="INTEGER" />
     <result column="phone" property="phone" jdbcType="VARCHAR" />
     <result column="email" property="email" jdbcType="VARCHAR" />
@@ -29,7 +29,7 @@
     delete from user
     where id = #{id,jdbcType=INTEGER}
   </delete>
-  <insert id="insert" parameterType="com.qfedu.sport.domin.User" >
+  <insert id="insert" parameterType="com.qfedu.sport.domain.User" >
     <selectKey resultType="java.lang.Integer" keyProperty="id" order="AFTER" >
       SELECT LAST_INSERT_ID()
     </selectKey>
@@ -42,7 +42,7 @@
       #{height,jdbcType=INTEGER}, #{weight,jdbcType=INTEGER}, #{createtime,jdbcType=DATE}, 
       #{constellation,jdbcType=VARCHAR}, #{home,jdbcType=VARCHAR})
   </insert>
-  <insert id="insertSelective" parameterType="com.qfedu.sport.domin.User" >
+  <insert id="insertSelective" parameterType="com.qfedu.sport.domain.User" >
     <selectKey resultType="java.lang.Integer" keyProperty="id" order="AFTER" >
       SELECT LAST_INSERT_ID()
     </selectKey>
@@ -118,7 +118,7 @@
       </if>
     </trim>
   </insert>
-  <update id="updateByPrimaryKeySelective" parameterType="com.qfedu.sport.domin.User" >
+  <update id="updateByPrimaryKeySelective" parameterType="com.qfedu.sport.domain.User" >
     update user
     <set >
       <if test="phone != null" >
@@ -157,7 +157,7 @@
     </set>
     where id = #{id,jdbcType=INTEGER}
   </update>
-  <update id="updateByPrimaryKey" parameterType="com.qfedu.sport.domin.User" >
+  <update id="updateByPrimaryKey" parameterType="com.qfedu.sport.domain.User" >
     update user
     set phone = #{phone,jdbcType=VARCHAR},
       email = #{email,jdbcType=VARCHAR},
@@ -172,4 +172,5 @@
       home = #{home,jdbcType=VARCHAR}
     where id = #{id,jdbcType=INTEGER}
   </update>
+
 </mapper>

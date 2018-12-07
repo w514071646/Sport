@@ -18,26 +18,32 @@ public class AddressController {
         @GetMapping("/api/v1/address")
         public Result selectAll(Integer uid){
 
-            if (service.selectAllAddress(uid) != null){
-
-                return  Result.success(service.selectAllAddress(uid));
-            } else {
-
-                return Result.error(CodeMsg.ERROR);
-            }
+            return service.selectAllAddress(uid);
         }
 
     //修改收货地址
          @PostMapping("/api/v1/address")
           public Result updateAddress(Address address){
 
-        if (service.selectAllAddress(address.getUid()) != null){
+          return   service.updateAddress(address);
+         }
 
-            return  Result.success(service.selectAllAddress(address.getUid()));
-        } else {
+    //查询指定收货地址
+    @PostMapping("/api/v1/selectById")
+    public Result selectAddress(Integer id){
 
-            return Result.error(CodeMsg.ERROR);
+            return service.selectById(id);
         }
+    //删除指定收货地址
+    @PostMapping("/api/v1/deladdress")
+    public Result delAddress(Integer id){
+
+        return service.delById(id);
     }
+
+
+
+
+
 
 }

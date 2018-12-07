@@ -8,8 +8,12 @@ import java.util.List;
 public interface AddressService {
 
 
-    List<Address> selectAllAddress(int uid);
+    Result selectAllAddress(int uid);
 
 
-    int updateAddress(Address address);
+    Result updateAddress(Address address);
+
+    Result selectById(Integer id);
+
+    Result delById(Integer id);
 }

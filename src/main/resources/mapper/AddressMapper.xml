@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
 <mapper namespace="com.qfedu.sport.dao.AddressMapper" >
-  <resultMap id="BaseResultMap" type="com.qfedu.sport.domin.Address" >
+  <resultMap id="BaseResultMap" type="com.qfedu.sport.domain.Address" >
     <id column="id" property="id" jdbcType="INTEGER" />
     <result column="rname" property="rname" jdbcType="VARCHAR" />
     <result column="rphone" property="rphone" jdbcType="VARCHAR" />
@@ -20,7 +20,7 @@
     delete from address
     where id = #{id,jdbcType=INTEGER}
   </delete>
-  <insert id="insert" parameterType="com.qfedu.sport.domin.Address" >
+  <insert id="insert" parameterType="com.qfedu.sport.domain.Address" >
     <selectKey resultType="java.lang.Integer" keyProperty="id" order="AFTER" >
       SELECT LAST_INSERT_ID()
     </selectKey>
@@ -29,7 +29,7 @@
     values (#{rname,jdbcType=VARCHAR}, #{rphone,jdbcType=VARCHAR}, #{address,jdbcType=VARCHAR}
       )
   </insert>
-  <insert id="insertSelective" parameterType="com.qfedu.sport.domin.Address" >
+  <insert id="insertSelective" parameterType="com.qfedu.sport.domain.Address" >
     <selectKey resultType="java.lang.Integer" keyProperty="id" order="AFTER" >
       SELECT LAST_INSERT_ID()
     </selectKey>
@@ -57,7 +57,7 @@
       </if>
     </trim>
   </insert>
-  <update id="updateByPrimaryKeySelective" parameterType="com.qfedu.sport.domin.Address" >
+  <update id="updateByPrimaryKeySelective" parameterType="com.qfedu.sport.domain.Address" >
     update address
     <set >
       <if test="rname != null" >
@@ -72,11 +72,16 @@
     </set>
     where id = #{id,jdbcType=INTEGER}
   </update>
-  <update id="updateByPrimaryKey" parameterType="com.qfedu.sport.domin.Address" >
+  <update id="updateByPrimaryKey" parameterType="com.qfedu.sport.domain.Address" >
     update address
     set rname = #{rname,jdbcType=VARCHAR},
       rphone = #{rphone,jdbcType=VARCHAR},
       address = #{address,jdbcType=VARCHAR}
     where id = #{id,jdbcType=INTEGER}
   </update>
+
+
+  <select id="selectAllAddress" resultMap="BaseResultMap">
+    select  * from  address where uid = #{uid}
+  </select>
 </mapper>
