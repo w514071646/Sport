@@ -8,6 +8,15 @@ public class Address {
     private String rphone;
 
     private String address;
+    private int uid;
+
+    public int getUid() {
+        return uid;
+    }
+
+    public void setUid(int uid) {
+        this.uid = uid;
+    }
 
     public Integer getId() {
         return id;
