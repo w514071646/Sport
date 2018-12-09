@@ -4,5 +4,7 @@ import com.qfedu.sport.vo.Result;
 
 public interface FocusonService {
 
-    public Result follow(int id);
+    Result follow(int id);
+
+    Result concerned(int id);
 }
