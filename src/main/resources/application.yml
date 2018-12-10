@@ -6,6 +6,14 @@ spring:
     url: jdbc:mysql://127.0.0.1:3306/movement?serverTimezone=GMT
     driver-class-name: com.mysql.cj.jdbc.Driver
     type: com.alibaba.druid.pool.DruidDataSource
+  mail:
+    default-encoding: utf-8
+    host: smtp.163.com
+    password: gaoyue159
+    port: 25
+    protocol: smtp
+    username: 13949033311@163.com
+
 server:
   port: 8081
 mybatis:
