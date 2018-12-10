@@ -1,0 +1,78 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.qfedu.sport.dao.CardMapper" >
+  <resultMap id="BaseResultMap" type="com.qfedu.sport.domain.Card" >
+    <id column="id" property="id" jdbcType="INTEGER" />
+    <result column="gid" property="gid" jdbcType="INTEGER" />
+    <result column="uid" property="uid" jdbcType="INTEGER" />
+    <result column="count" property="count" jdbcType="INTEGER" />
+    <result column="cardstatus" property="cardstatus" jdbcType="INTEGER" />
+    <result column="size" property="size" jdbcType="INTEGER"/>
+  </resultMap>
+  <sql id="Base_Column_List" >
+    id, gid, uid, `count`, cardstatus,`size`
+  </sql>
+
+  <insert id="insertSelective" parameterType="com.qfedu.sport.domain.Card" >
+    <selectKey resultType="java.lang.Integer" keyProperty="id" order="AFTER" >
+      SELECT LAST_INSERT_ID()
+    </selectKey>
+    insert into card
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="gid != null" >
+        gid,
+      </if>
+      <if test="uid != null" >
+        uid,
+      </if>
+      <if test="count != null" >
+        `count`,
+      </if>
+      <if test="cardstatus != null" >
+        cardstatus,
+      </if>
+      <if test="size != null" >
+        `size`,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="gid != null" >
+        #{gid,jdbcType=INTEGER},
+      </if>
+      <if test="uid != null" >
+        #{uid,jdbcType=INTEGER},
+      </if>
+      <if test="count != null" >
+        #{count,jdbcType=INTEGER},
+      </if>
+      <if test="cardstatus != null" >
+        #{cardstatus,jdbcType=INTEGER},
+      </if>
+      <if test="size != null" >
+        #{size,jdbcType=INTEGER},
+      </if>
+    </trim>
+  </insert>
+
+  <select id="selectall" resultType="java.util.Map">
+    select cid,goodsid,goodsname,goodsprice,card.count as 'count',sizename,goodsimg
+    from goods
+    left join card on goodsid = card.gid
+    left join sizes on card.size = sizes.id
+    where card.uid = #{uid} and cardstatus = 0 and card.count > 0
+  </select>
+
+  <update id="updatecount">
+
+    update card set card.count =#{count} where cid = #{cid}
+
+  </update>
+
+  <update id="updatestatus" >
+
+    update card set cardstatus = 1 where cid = #{cid}
+
+  </update>
+
+
+</mapper>
