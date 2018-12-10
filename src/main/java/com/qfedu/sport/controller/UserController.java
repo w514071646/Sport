@@ -1,17 +1,20 @@
 package com.qfedu.sport.controller;
 
 
-import com.qfedu.sport.domain.User;
-import com.qfedu.sport.vo.Result;
-import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 @RestController
 public class UserController {
-    @PostMapping
-    public Result regiest(User user){
-        
-
-        return  null;
-    }
+//    @GetMapping ("/api/v1/test")
+//    public Result regiest(String to){
+//        Random random = new Random();
+//       int code = random.nextInt(9999);
+//        EmailUtils email = new EmailUtils();
+//        try {
+//            email.sendMail("zhuque159@qq.com",code);
+//        } catch (Exception e) {
+//            e.printStackTrace();
+//        }
+//        return  null;
+//    }
 }

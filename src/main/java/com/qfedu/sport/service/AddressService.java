@@ -16,4 +16,6 @@ public interface AddressService {
     Result selectById(Integer id);
 
     Result delById(Integer id);
+
+    Result add(Address address);
 }
