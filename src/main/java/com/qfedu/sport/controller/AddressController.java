@@ -29,7 +29,7 @@ public class AddressController {
          }
 
     //查询指定收货地址
-    @PostMapping("/api/v1/selectById")
+    @GetMapping ("/api/v1/selectById")
     public Result selectAddress(Integer id){
 
             return service.selectById(id);
@@ -40,6 +40,16 @@ public class AddressController {
 
         return service.delById(id);
     }
+
+
+    //添加收货地址
+    @PostMapping("/api/v1/savaAddress")
+    public Result savaAddress(Integer id){
+
+        return service.delById(id);
+    }
+
+
 
 
 

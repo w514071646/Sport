@@ -1,4 +1,4 @@
-package com.qfedu.sport.serviceimpl;
+package com.qfedu.sport.service.impl;
 
 import com.qfedu.sport.dao.AddressMapper;
 import com.qfedu.sport.domain.Address;
@@ -28,6 +28,9 @@ public class AddressServiceImpl implements AddressService {
     //修改地址信息
     @Override
     public Result updateAddress(Address address) {
+        if (address.getState() == 1) {
+            addressMapper.updataState();
+        }
         if (addressMapper.updateByPrimaryKey(address) > 0) {
            return Result.success( addressMapper.updateByPrimaryKey(address));
         }else {
@@ -48,6 +51,15 @@ public class AddressServiceImpl implements AddressService {
     @Override
     public Result delById(Integer id) {
         return Result.success(addressMapper.deleteByPrimaryKey(id));
+    }
+    //添加收货地址
+    @Override
+    public Result add(Address address) {
+        if (addressMapper.insert(address)> 0) {
+            return Result.success(addressMapper.insert(address));
+        }else {
+            return  Result.error(CodeMsg.ERROR);
+        }
     }
 
 

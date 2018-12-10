@@ -4,6 +4,7 @@ import com.qfedu.sport.domain.Address;
 import org.apache.ibatis.annotations.Delete;
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Select;
+import org.apache.ibatis.annotations.Update;
 import org.springframework.stereotype.Component;
 
 import java.util.List;
@@ -27,6 +28,9 @@ public interface AddressMapper {
     Address selectById(int id);
     @Delete("delecte from address where id =#{id}")
     int delAddress(int id);
+    @Update("update address set state = 0 ")
+    int updataState();
+
 
 
 

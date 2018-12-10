@@ -1,8 +1,12 @@
 package com.qfedu.sport.domain;
 
+
+
+import com.fasterxml.jackson.annotation.JsonFormat;
+
 import java.util.Date;
 
-public class User {
+public class User{
     private Integer id;
 
     private String phone;
@@ -21,7 +25,9 @@ public class User {
 
     private Integer weight;
 
+    @JsonFormat(pattern = "yyyy-MM-dd")
     private Date createtime;
+
 
     private String constellation;
 
