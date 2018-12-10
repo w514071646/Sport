@@ -3,10 +3,13 @@ package com.qfedu.sport.dao;
 import com.qfedu.sport.domain.Address;
 import com.qfedu.sport.domain.User;
 import org.apache.ibatis.annotations.Mapper;
+import org.springframework.stereotype.Component;
+import org.springframework.stereotype.Controller;
 
 import java.util.List;
 
 @Mapper
+@Component("UserMapper")
 public interface UserMapper {
     int deleteByPrimaryKey(Integer id);
 
@@ -20,4 +23,5 @@ public interface UserMapper {
 
     int updateByPrimaryKey(User record);
 
+    User selectByEmail(String email);
 }
