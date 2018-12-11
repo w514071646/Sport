@@ -177,5 +177,9 @@
     <include refid="Base_Column_List" />
     from user where email = #{email}
   </select>
-
+  <update id="updatePassByEmail">
+    update user
+    set password = #{password}
+    where email = #{email}
+  </update>
 </mapper>

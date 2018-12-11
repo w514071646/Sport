@@ -22,7 +22,6 @@ public class UserController {
     //注册
     @PostMapping("/regist")
     public Result userRegist(String email, String password,String code) {
-        System.out.println("email1:" + email);
         return userService.regist(email,password,code);
     }
 
@@ -33,9 +32,20 @@ public class UserController {
     }
 
     //登录
-    @GetMapping("/login")
+    @PostMapping("/login")
     public Result userLogin(String email, String password, String token, HttpServletRequest request, HttpServletResponse response){
-
         return userService.login(email,password,token,request,response);
+    }
+
+    //登出
+    @GetMapping("/loginout")
+    public Result userLoginOut(String token) {
+        return userService.loginOut(token);
+    }
+
+    //修改密码
+    @PostMapping("/modifypassword")
+    public Result modifyPassword(String email, String password,String code) {
+        return userService.updatePassword(email, password, code);
     }
 }

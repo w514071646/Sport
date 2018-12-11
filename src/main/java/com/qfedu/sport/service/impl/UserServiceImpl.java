@@ -10,11 +10,13 @@ import com.qfedu.sport.token.TokenUtil;
 import com.qfedu.sport.util.StringUtil;
 import com.qfedu.sport.vo.CodeMsg;
 import com.qfedu.sport.vo.Result;
+import com.sun.org.apache.bcel.internal.classfile.Code;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.mail.SimpleMailMessage;
 import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.stereotype.Service;
+import redis.clients.jedis.JedisPool;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -34,7 +36,8 @@ public class UserServiceImpl implements UserService {
     @Autowired
     private UserMapper userMapper;
 
-    JedisUtil jedisUtil = new JedisUtil("10.8.162.65",6379,"gaoyue123");
+    JedisPool jedisPool = new JedisPool("10.8.162.65",6379);
+    JedisUtil jedisUtil = new JedisUtil(jedisPool,"gaoyue123");
 
     @Override
     public Result EmailCode(String email) {
@@ -64,17 +67,22 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public Result regist(String email, String password, String code) {
-        User user = userMapper.selectByEmail(email);
-        System.out.println("email2:" + email);
-        //判断邮箱是否已经注册
-        if (user != null) {
-            return Result.error(CodeMsg.ERROR);
+        String oldcode = jedisUtil.getStr(email);
+        if (Objects.equals(oldcode,code)) {
+            User user = userMapper.selectByEmail(email);
+            //判断邮箱是否已经注册
+            if (user != null) {
+                return Result.error(CodeMsg.ERROR);
+            } else {
+                User user1 = new User();
+                user1.setEmail(email);
+                user1.setPassword(password);
+                return userMapper.insertSelective(user1) > 0 ? Result.success(null) : Result.error(CodeMsg.ERROR);
+            }
         } else {
-            User user1 = new User();
-            user1.setEmail(email);
-            user1.setPassword(password);
-            return userMapper.insertSelective(user1) > 0 ? Result.success(null) : Result.error(CodeMsg.ERROR);
+            return Result.error(CodeMsg.ERROR);
         }
+
     }
 
     @Override
@@ -114,6 +122,29 @@ public class UserServiceImpl implements UserService {
             }
             return Result.error(CodeMsg.ERROR);
         }
+    }
+
+    @Override
+    public Result loginOut(String token) {
+        jedisUtil.delHash(SystemCon.TOKENHASH,"token:"+token);
+        return Result.success(null);
+    }
+
+    @Override
+    public Result updatePassword(String email, String password, String code) {
+        //判断用户是否存在
+        User user = userMapper.selectByEmail(email);
+        if (user != null) {
+            String oldcode = jedisUtil.getStr(email);
+            //判断验证码是否有效
+            if (Objects.equals(oldcode,code)) {
+                return userMapper.updatePassByEmail(email,password) > 0 ? Result.success(null) : Result.error(CodeMsg.ERROR);
+            }
+            return Result.error(CodeMsg.ERROR);
+        } else {
+            return Result.error(CodeMsg.ERROR);
+        }
+
     }
 
 

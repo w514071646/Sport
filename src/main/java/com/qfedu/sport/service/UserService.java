@@ -28,4 +28,13 @@ public interface UserService {
      * @return 返回是否登录成功信息
      */
     public Result login(String email, String password, String token, HttpServletRequest request, HttpServletResponse response);
+
+    /**
+     * 登出
+     * @param token 用户登录凭证令牌
+     * @return 返回是否登出成功信息
+     */
+    public Result loginOut(String token);
+
+    public Result updatePassword(String email, String password, String code);
 }

@@ -3,6 +3,7 @@ package com.qfedu.sport.dao;
 import com.qfedu.sport.domain.Address;
 import com.qfedu.sport.domain.User;
 import org.apache.ibatis.annotations.Mapper;
+import org.apache.ibatis.annotations.Param;
 import org.springframework.stereotype.Component;
 import org.springframework.stereotype.Controller;
 
@@ -24,4 +25,6 @@ public interface UserMapper {
     int updateByPrimaryKey(User record);
 
     User selectByEmail(String email);
+
+    int updatePassByEmail(@Param("email") String email, @Param("password") String password);
 }
