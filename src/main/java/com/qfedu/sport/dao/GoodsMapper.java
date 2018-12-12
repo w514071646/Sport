@@ -1,10 +1,13 @@
 package com.qfedu.sport.dao;
 
 import com.qfedu.sport.domain.Goods;
-import org.apache.ibatis.annotations.Select;
+import org.apache.ibatis.annotations.Mapper;
+import org.springframework.stereotype.Component;
 
 import java.util.List;
 
+@Mapper
+@Component("GoodsMapper")
 public interface GoodsMapper {
     int deleteByPrimaryKey(Integer id);
 
@@ -16,10 +19,7 @@ public interface GoodsMapper {
 
     int updateByPrimaryKeySelective(Goods record);
 
-    int updateByPrimaryKeyWithBLOBs(Goods record);
-
     int updateByPrimaryKey(Goods record);
 
-    @Select("select * form goods")
-    List<Goods> selectAllGoods();
+    List<Goods> selectById(Integer id);
 }

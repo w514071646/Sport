@@ -67,17 +67,21 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public Result regist(String email, String password, String code) {
-        String oldcode = jedisUtil.getStr(email);
-        if (Objects.equals(oldcode,code)) {
-            User user = userMapper.selectByEmail(email);
-            //判断邮箱是否已经注册
-            if (user != null) {
-                return Result.error(CodeMsg.ERROR);
+        if (jedisUtil.isKey(email)) {
+            String oldcode = jedisUtil.getStr(email);
+            if (Objects.equals(oldcode, code)) {
+                User user = userMapper.selectByEmail(email);
+                //判断邮箱是否已经注册
+                if (user != null) {
+                    return Result.error(CodeMsg.ERROR);
+                } else {
+                    User user1 = new User();
+                    user1.setEmail(email);
+                    user1.setPassword(password);
+                    return userMapper.insertSelective(user1) > 0 ? Result.success(null) : Result.error(CodeMsg.ERROR);
+                }
             } else {
-                User user1 = new User();
-                user1.setEmail(email);
-                user1.setPassword(password);
-                return userMapper.insertSelective(user1) > 0 ? Result.success(null) : Result.error(CodeMsg.ERROR);
+                return Result.error(CodeMsg.ERROR);
             }
         } else {
             return Result.error(CodeMsg.ERROR);

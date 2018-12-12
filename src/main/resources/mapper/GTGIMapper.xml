@@ -1,0 +1,96 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.qfedu.sport.dao.GTGIMapper" >
+  <resultMap id="BaseResultMap" type="com.qfedu.sport.domain.GTGI" >
+    <id column="id" property="id" jdbcType="INTEGER" />
+    <result column="gtid" property="gtid" jdbcType="INTEGER" />
+    <result column="gid" property="gid" jdbcType="INTEGER" />
+  </resultMap>
+  <sql id="Base_Column_List" >
+    id, gtid, gid
+  </sql>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
+    select 
+    <include refid="Base_Column_List" />
+    from gt_gi
+    where id = #{id,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
+    delete from gt_gi
+    where id = #{id,jdbcType=INTEGER}
+  </delete>
+  <insert id="insert" parameterType="com.qfedu.sport.domain.GTGI" >
+    <selectKey resultType="java.lang.Integer" keyProperty="id" order="AFTER" >
+      SELECT LAST_INSERT_ID()
+    </selectKey>
+    insert into gt_gi (gtid, gid)
+    values (#{gtid,jdbcType=INTEGER}, #{gid,jdbcType=INTEGER})
+  </insert>
+  <insert id="insertSelective" parameterType="com.qfedu.sport.domain.GTGI" >
+    <selectKey resultType="java.lang.Integer" keyProperty="id" order="AFTER" >
+      SELECT LAST_INSERT_ID()
+    </selectKey>
+    insert into gt_gi
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="gtid != null" >
+        gtid,
+      </if>
+      <if test="gid != null" >
+        gid,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="gtid != null" >
+        #{gtid,jdbcType=INTEGER},
+      </if>
+      <if test="gid != null" >
+        #{gid,jdbcType=INTEGER},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.qfedu.sport.domain.GTGI" >
+    update gt_gi
+    <set >
+      <if test="gtid != null" >
+        gtid = #{gtid,jdbcType=INTEGER},
+      </if>
+      <if test="gid != null" >
+        gid = #{gid,jdbcType=INTEGER},
+      </if>
+    </set>
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.qfedu.sport.domain.GTGI" >
+    update gt_gi
+    set gtid = #{gtid,jdbcType=INTEGER},
+      gid = #{gid,jdbcType=INTEGER}
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+  
+  <resultMap id="GTGIResultMap" type="com.qfedu.sport.domain.GTGI" extends="BaseResultMap">
+
+    <collection property="goods"
+                ofType="com.qfedu.sport.domain.Goods">
+      <id column="id" property="id" jdbcType="INTEGER" />
+      <result column="goodsname" property="goodsname" jdbcType="VARCHAR" />
+      <result column="goodsprice" property="goodsprice" jdbcType="VARCHAR" />
+      <result column="goosdetail" property="goosdetail" jdbcType="VARCHAR" />
+      <result column="goodstext" property="goodstext" jdbcType="VARCHAR" />
+      <result column="goodsimg" property="goodsimg" jdbcType="VARCHAR" />
+      <result column="goodscount" property="goodscount" jdbcType="INTEGER" />
+      <result column="materials" property="materials" jdbcType="INTEGER" />
+    </collection>
+  </resultMap>
+  
+  <select id="selectByGtid" resultMap="GTGIResultMap">
+    select * from gt_gi left outer join goods
+    on gid=goods.id
+    <where>
+      <if test="gtid != null" >
+      gtid = #{gtid}
+      </if>
+    </where>
+    order by goodscount desc
+  </select>
+
+</mapper>

@@ -1,5 +1,7 @@
 package com.qfedu.sport.domain;
 
+import java.util.List;
+
 public class Goods {
     private Integer id;
 
@@ -7,15 +9,25 @@ public class Goods {
 
     private String goodsprice;
 
-    private String goodsdetail;
+    private String goosdetail;
+
+    private String goodstext;
+
+    private String goodsimg;
+
+    private List<GoodsImages> goodsImages;
 
     private Integer goodscount;
 
     private Integer materials;
 
-    private String goodsimg;
+    public List<GoodsImages> getGoodsImages() {
+        return goodsImages;
+    }
 
-    private String goodstext;
+    public void setGoodsImages(List<GoodsImages> goodsImages) {
+        this.goodsImages = goodsImages;
+    }
 
     public Integer getId() {
         return id;
@@ -41,12 +53,28 @@ public class Goods {
         this.goodsprice = goodsprice == null ? null : goodsprice.trim();
     }
 
-    public String getGoodsdetail() {
-        return goodsdetail;
+    public String getGoosdetail() {
+        return goosdetail;
     }
 
-    public void setGoodsdetail(String goodsdetail) {
-        this.goodsdetail = goodsdetail == null ? null : goodsdetail.trim();
+    public void setGoosdetail(String goosdetail) {
+        this.goosdetail = goosdetail == null ? null : goosdetail.trim();
+    }
+
+    public String getGoodstext() {
+        return goodstext;
+    }
+
+    public void setGoodstext(String goodstext) {
+        this.goodstext = goodstext == null ? null : goodstext.trim();
+    }
+
+    public String getGoodsimg() {
+        return goodsimg;
+    }
+
+    public void setGoodsimg(String goodsimg) {
+        this.goodsimg = goodsimg == null ? null : goodsimg.trim();
     }
 
     public Integer getGoodscount() {
@@ -63,21 +91,5 @@ public class Goods {
 
     public void setMaterials(Integer materials) {
         this.materials = materials;
-    }
-
-    public String getGoodsimg() {
-        return goodsimg;
-    }
-
-    public void setGoodsimg(String goodsimg) {
-        this.goodsimg = goodsimg == null ? null : goodsimg.trim();
-    }
-
-    public String getGoodstext() {
-        return goodstext;
-    }
-
-    public void setGoodstext(String goodstext) {
-        this.goodstext = goodstext == null ? null : goodstext.trim();
     }
 }

@@ -1,29 +1,22 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
-<mapper namespace="com.qfedu.sport.mapper.GoodsMapper" >
+<mapper namespace="com.qfedu.sport.dao.GoodsMapper" >
   <resultMap id="BaseResultMap" type="com.qfedu.sport.domain.Goods" >
     <id column="id" property="id" jdbcType="INTEGER" />
     <result column="goodsname" property="goodsname" jdbcType="VARCHAR" />
     <result column="goodsprice" property="goodsprice" jdbcType="VARCHAR" />
-    <result column="goodsdetail" property="goodsdetail" jdbcType="VARCHAR" />
+    <result column="goosdetail" property="goosdetail" jdbcType="VARCHAR" />
+    <result column="goodstext" property="goodstext" jdbcType="VARCHAR" />
+    <result column="goodsimg" property="goodsimg" jdbcType="VARCHAR" />
     <result column="goodscount" property="goodscount" jdbcType="INTEGER" />
     <result column="materials" property="materials" jdbcType="INTEGER" />
-    <result column="goodsimg" property="goodsimg" jdbcType="VARCHAR" />
-  </resultMap>
-  <resultMap id="ResultMapWithBLOBs" type="com.qfedu.sport.domain.Goods" extends="BaseResultMap" >
-    <result column="goodstext" property="goodstext" jdbcType="LONGVARCHAR" />
   </resultMap>
   <sql id="Base_Column_List" >
-    id, goodsname, goodsprice, goodsdetail, goodscount, materials, goodsimg
+    id, goodsname, goodsprice, goosdetail, goodstext, goodsimg, goodscount, materials
   </sql>
-  <sql id="Blob_Column_List" >
-    goodstext
-  </sql>
-  <select id="selectByPrimaryKey" resultMap="ResultMapWithBLOBs" parameterType="java.lang.Integer" >
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
     select 
     <include refid="Base_Column_List" />
-    ,
-    <include refid="Blob_Column_List" />
     from goods
     where id = #{id,jdbcType=INTEGER}
   </select>
@@ -35,12 +28,12 @@
     <selectKey resultType="java.lang.Integer" keyProperty="id" order="AFTER" >
       SELECT LAST_INSERT_ID()
     </selectKey>
-    insert into goods (goodsname, goodsprice, goodsdetail, 
-      goodscount, materials, goodsimg, 
-      goodstext)
-    values (#{goodsname,jdbcType=VARCHAR}, #{goodsprice,jdbcType=VARCHAR}, #{goodsdetail,jdbcType=VARCHAR}, 
-      #{goodscount,jdbcType=INTEGER}, #{materials,jdbcType=INTEGER}, #{goodsimg,jdbcType=VARCHAR}, 
-      #{goodstext,jdbcType=LONGVARCHAR})
+    insert into goods (goodsname, goodsprice, goosdetail, 
+      goodstext, goodsimg, goodscount, 
+      materials)
+    values (#{goodsname,jdbcType=VARCHAR}, #{goodsprice,jdbcType=VARCHAR}, #{goosdetail,jdbcType=VARCHAR}, 
+      #{goodstext,jdbcType=VARCHAR}, #{goodsimg,jdbcType=VARCHAR}, #{goodscount,jdbcType=INTEGER}, 
+      #{materials,jdbcType=INTEGER})
   </insert>
   <insert id="insertSelective" parameterType="com.qfedu.sport.domain.Goods" >
     <selectKey resultType="java.lang.Integer" keyProperty="id" order="AFTER" >
@@ -54,20 +47,20 @@
       <if test="goodsprice != null" >
         goodsprice,
       </if>
-      <if test="goodsdetail != null" >
-        goodsdetail,
+      <if test="goosdetail != null" >
+        goosdetail,
+      </if>
+      <if test="goodstext != null" >
+        goodstext,
+      </if>
+      <if test="goodsimg != null" >
+        goodsimg,
       </if>
       <if test="goodscount != null" >
         goodscount,
       </if>
       <if test="materials != null" >
         materials,
-      </if>
-      <if test="goodsimg != null" >
-        goodsimg,
-      </if>
-      <if test="goodstext != null" >
-        goodstext,
       </if>
     </trim>
     <trim prefix="values (" suffix=")" suffixOverrides="," >
@@ -77,20 +70,20 @@
       <if test="goodsprice != null" >
         #{goodsprice,jdbcType=VARCHAR},
       </if>
-      <if test="goodsdetail != null" >
-        #{goodsdetail,jdbcType=VARCHAR},
+      <if test="goosdetail != null" >
+        #{goosdetail,jdbcType=VARCHAR},
+      </if>
+      <if test="goodstext != null" >
+        #{goodstext,jdbcType=VARCHAR},
+      </if>
+      <if test="goodsimg != null" >
+        #{goodsimg,jdbcType=VARCHAR},
       </if>
       <if test="goodscount != null" >
         #{goodscount,jdbcType=INTEGER},
       </if>
       <if test="materials != null" >
         #{materials,jdbcType=INTEGER},
-      </if>
-      <if test="goodsimg != null" >
-        #{goodsimg,jdbcType=VARCHAR},
-      </if>
-      <if test="goodstext != null" >
-        #{goodstext,jdbcType=LONGVARCHAR},
       </if>
     </trim>
   </insert>
@@ -103,8 +96,14 @@
       <if test="goodsprice != null" >
         goodsprice = #{goodsprice,jdbcType=VARCHAR},
       </if>
-      <if test="goodsdetail != null" >
-        goodsdetail = #{goodsdetail,jdbcType=VARCHAR},
+      <if test="goosdetail != null" >
+        goosdetail = #{goosdetail,jdbcType=VARCHAR},
+      </if>
+      <if test="goodstext != null" >
+        goodstext = #{goodstext,jdbcType=VARCHAR},
+      </if>
+      <if test="goodsimg != null" >
+        goodsimg = #{goodsimg,jdbcType=VARCHAR},
       </if>
       <if test="goodscount != null" >
         goodscount = #{goodscount,jdbcType=INTEGER},
@@ -112,34 +111,31 @@
       <if test="materials != null" >
         materials = #{materials,jdbcType=INTEGER},
       </if>
-      <if test="goodsimg != null" >
-        goodsimg = #{goodsimg,jdbcType=VARCHAR},
-      </if>
-      <if test="goodstext != null" >
-        goodstext = #{goodstext,jdbcType=LONGVARCHAR},
-      </if>
     </set>
-    where id = #{id,jdbcType=INTEGER}
-  </update>
-  <update id="updateByPrimaryKeyWithBLOBs" parameterType="com.qfedu.sport.domain.Goods" >
-    update goods
-    set goodsname = #{goodsname,jdbcType=VARCHAR},
-      goodsprice = #{goodsprice,jdbcType=VARCHAR},
-      goodsdetail = #{goodsdetail,jdbcType=VARCHAR},
-      goodscount = #{goodscount,jdbcType=INTEGER},
-      materials = #{materials,jdbcType=INTEGER},
-      goodsimg = #{goodsimg,jdbcType=VARCHAR},
-      goodstext = #{goodstext,jdbcType=LONGVARCHAR}
     where id = #{id,jdbcType=INTEGER}
   </update>
   <update id="updateByPrimaryKey" parameterType="com.qfedu.sport.domain.Goods" >
     update goods
     set goodsname = #{goodsname,jdbcType=VARCHAR},
       goodsprice = #{goodsprice,jdbcType=VARCHAR},
-      goodsdetail = #{goodsdetail,jdbcType=VARCHAR},
+      goosdetail = #{goosdetail,jdbcType=VARCHAR},
+      goodstext = #{goodstext,jdbcType=VARCHAR},
+      goodsimg = #{goodsimg,jdbcType=VARCHAR},
       goodscount = #{goodscount,jdbcType=INTEGER},
-      materials = #{materials,jdbcType=INTEGER},
-      goodsimg = #{goodsimg,jdbcType=VARCHAR}
+      materials = #{materials,jdbcType=INTEGER}
     where id = #{id,jdbcType=INTEGER}
   </update>
+
+  <resultMap id="GoodsResultMap" type="com.qfedu.sport.domain.Goods" extends="BaseResultMap">
+    <collection property="goodsImages"
+                ofType="com.qfedu.sport.domain.GoodsImages">
+      <id column="id" property="id" jdbcType="INTEGER" />
+      <result column="gid" property="gid" jdbcType="INTEGER" />
+      <result column="imgname" property="imgname" jdbcType="VARCHAR" />
+    </collection>
+  </resultMap>
+
+  <select id="selectById" resultMap="GoodsResultMap">
+    select goods.id,goodsname,goodsprice,goosdetail,goodstext,goodsimg,goodscount,materials,gid,imgname from goods left outer join goodsimages on goods.id=gid where goods.id = #{id}
+  </select>
 </mapper>
