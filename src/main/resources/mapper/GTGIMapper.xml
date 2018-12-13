@@ -74,7 +74,7 @@
       <id column="id" property="id" jdbcType="INTEGER" />
       <result column="goodsname" property="goodsname" jdbcType="VARCHAR" />
       <result column="goodsprice" property="goodsprice" jdbcType="VARCHAR" />
-      <result column="goosdetail" property="goosdetail" jdbcType="VARCHAR" />
+      <result column="goodsdetail" property="goodsdetail" jdbcType="VARCHAR" />
       <result column="goodstext" property="goodstext" jdbcType="VARCHAR" />
       <result column="goodsimg" property="goodsimg" jdbcType="VARCHAR" />
       <result column="goodscount" property="goodscount" jdbcType="INTEGER" />

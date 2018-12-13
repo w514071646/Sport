@@ -5,14 +5,14 @@
     <id column="id" property="id" jdbcType="INTEGER" />
     <result column="goodsname" property="goodsname" jdbcType="VARCHAR" />
     <result column="goodsprice" property="goodsprice" jdbcType="VARCHAR" />
-    <result column="goosdetail" property="goosdetail" jdbcType="VARCHAR" />
+    <result column="goodsdetail" property="goodsdetail" jdbcType="VARCHAR" />
     <result column="goodstext" property="goodstext" jdbcType="VARCHAR" />
     <result column="goodsimg" property="goodsimg" jdbcType="VARCHAR" />
     <result column="goodscount" property="goodscount" jdbcType="INTEGER" />
     <result column="materials" property="materials" jdbcType="INTEGER" />
   </resultMap>
   <sql id="Base_Column_List" >
-    id, goodsname, goodsprice, goosdetail, goodstext, goodsimg, goodscount, materials
+    id, goodsname, goodsprice, goodsdetail, goodstext, goodsimg, goodscount, materials
   </sql>
   <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
     select 
@@ -28,10 +28,10 @@
     <selectKey resultType="java.lang.Integer" keyProperty="id" order="AFTER" >
       SELECT LAST_INSERT_ID()
     </selectKey>
-    insert into goods (goodsname, goodsprice, goosdetail, 
+    insert into goods (goodsname, goodsprice, goodsdetail,
       goodstext, goodsimg, goodscount, 
       materials)
-    values (#{goodsname,jdbcType=VARCHAR}, #{goodsprice,jdbcType=VARCHAR}, #{goosdetail,jdbcType=VARCHAR}, 
+    values (#{goodsname,jdbcType=VARCHAR}, #{goodsprice,jdbcType=VARCHAR}, #{goodsdetail,jdbcType=VARCHAR},
       #{goodstext,jdbcType=VARCHAR}, #{goodsimg,jdbcType=VARCHAR}, #{goodscount,jdbcType=INTEGER}, 
       #{materials,jdbcType=INTEGER})
   </insert>
@@ -47,8 +47,8 @@
       <if test="goodsprice != null" >
         goodsprice,
       </if>
-      <if test="goosdetail != null" >
-        goosdetail,
+      <if test="goodsdetail != null" >
+        goodsdetail,
       </if>
       <if test="goodstext != null" >
         goodstext,
@@ -70,8 +70,8 @@
       <if test="goodsprice != null" >
         #{goodsprice,jdbcType=VARCHAR},
       </if>
-      <if test="goosdetail != null" >
-        #{goosdetail,jdbcType=VARCHAR},
+      <if test="goodsdetail != null" >
+        #{goodsdetail,jdbcType=VARCHAR},
       </if>
       <if test="goodstext != null" >
         #{goodstext,jdbcType=VARCHAR},
@@ -96,8 +96,8 @@
       <if test="goodsprice != null" >
         goodsprice = #{goodsprice,jdbcType=VARCHAR},
       </if>
-      <if test="goosdetail != null" >
-        goosdetail = #{goosdetail,jdbcType=VARCHAR},
+      <if test="goodsdetail != null" >
+        goodsdetail = #{goodsdetail,jdbcType=VARCHAR},
       </if>
       <if test="goodstext != null" >
         goodstext = #{goodstext,jdbcType=VARCHAR},
@@ -118,7 +118,7 @@
     update goods
     set goodsname = #{goodsname,jdbcType=VARCHAR},
       goodsprice = #{goodsprice,jdbcType=VARCHAR},
-      goosdetail = #{goosdetail,jdbcType=VARCHAR},
+      goodsdetail = #{goodsdetail,jdbcType=VARCHAR},
       goodstext = #{goodstext,jdbcType=VARCHAR},
       goodsimg = #{goodsimg,jdbcType=VARCHAR},
       goodscount = #{goodscount,jdbcType=INTEGER},
@@ -136,6 +136,6 @@
   </resultMap>
 
   <select id="selectById" resultMap="GoodsResultMap">
-    select goods.id,goodsname,goodsprice,goosdetail,goodstext,goodsimg,goodscount,materials,gid,imgname from goods left outer join goodsimages on goods.id=gid where goods.id = #{id}
+    select goods.id,goodsname,goodsprice,goodsdetail,goodstext,goodsimg,goodscount,materials,gid,imgname from goods left outer join goodsimages on goods.id=gid where goods.id = #{id}
   </select>
 </mapper>

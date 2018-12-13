@@ -9,7 +9,7 @@ public class Goods {
 
     private String goodsprice;
 
-    private String goosdetail;
+    private String goodsdetail;
 
     private String goodstext;
 
@@ -53,12 +53,12 @@ public class Goods {
         this.goodsprice = goodsprice == null ? null : goodsprice.trim();
     }
 
-    public String getGoosdetail() {
-        return goosdetail;
+    public String getGoodsdetail() {
+        return goodsdetail;
     }
 
-    public void setGoosdetail(String goosdetail) {
-        this.goosdetail = goosdetail == null ? null : goosdetail.trim();
+    public void setGoodsdetail(String goodsdetail) {
+        this.goodsdetail = goodsdetail == null ? null : goodsdetail.trim();
     }
 
     public String getGoodstext() {

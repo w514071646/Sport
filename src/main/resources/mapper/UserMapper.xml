@@ -72,9 +72,9 @@
       <if test="weight != null" >
         weight,
       </if>
-      <if test="createtime != null" >
+
         createtime,
-      </if>
+
       <if test="constellation != null" >
         constellation,
       </if>
@@ -107,9 +107,9 @@
       <if test="weight != null" >
         #{weight,jdbcType=INTEGER},
       </if>
-      <if test="createtime != null" >
-        #{createtime,jdbcType=DATE},
-      </if>
+
+        now(),
+
       <if test="constellation != null" >
         #{constellation,jdbcType=VARCHAR},
       </if>
