@@ -55,8 +55,9 @@ public class AddressServiceImpl implements AddressService {
     //添加收货地址
     @Override
     public Result add(Address address) {
-        if (addressMapper.insert(address)> 0) {
-            return Result.success(addressMapper.insert(address));
+        int i = addressMapper.insert(address);
+        if (i> 0) {
+            return  Result.success(1);
         }else {
             return  Result.error(CodeMsg.ERROR);
         }

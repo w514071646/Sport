@@ -12,4 +12,7 @@ public interface CardService {
     public Result updateStatus(Integer cid);
 
     public Result updateCount(Integer count,Integer cid);
+
+    public Result buying(Card card);
+
 }

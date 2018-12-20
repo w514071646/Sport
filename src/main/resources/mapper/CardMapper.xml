@@ -2,7 +2,7 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
 <mapper namespace="com.qfedu.sport.dao.CardMapper" >
   <resultMap id="BaseResultMap" type="com.qfedu.sport.domain.Card" >
-    <id column="id" property="id" jdbcType="INTEGER" />
+    <id column="cid" property="cid" jdbcType="INTEGER" />
     <result column="gid" property="gid" jdbcType="INTEGER" />
     <result column="uid" property="uid" jdbcType="INTEGER" />
     <result column="count" property="count" jdbcType="INTEGER" />
@@ -10,11 +10,11 @@
     <result column="size" property="size" jdbcType="INTEGER"/>
   </resultMap>
   <sql id="Base_Column_List" >
-    id, gid, uid, `count`, cardstatus,`size`
+    cid, gid, uid, `count`, cardstatus,`size`
   </sql>
 
   <insert id="insertSelective" parameterType="com.qfedu.sport.domain.Card" >
-    <selectKey resultType="java.lang.Integer" keyProperty="id" order="AFTER" >
+    <selectKey resultType="java.lang.Integer" keyProperty="cid" order="AFTER" >
       SELECT LAST_INSERT_ID()
     </selectKey>
     insert into card
@@ -55,9 +55,9 @@
   </insert>
 
   <select id="selectall" resultType="java.util.Map">
-    select cid,goodsid,goodsname,goodsprice,card.count as 'count',sizename,goodsimg
+    select cid,goods.id,goodsname,goodsprice,card.count as 'count',sizename,goodsimg
     from goods
-    left join card on goodsid = card.gid
+    left join card on goods.id = card.gid
     left join sizes on card.size = sizes.id
     where card.uid = #{uid} and cardstatus = 0 and card.count > 0
   </select>
@@ -68,11 +68,33 @@
 
   </update>
 
+  <update id="updatecounttt">
+
+    update card set card.count =#{count} where uid = #{uid} and gid = #{gid}
+
+  </update>
+
+
   <update id="updatestatus" >
 
     update card set cardstatus = 1 where cid = #{cid}
 
   </update>
+
+  <select id="selectbygid" resultMap="BaseResultMap">
+
+    select * from card where gid = #{gid} and uid = #{uid} and cardstatus = 0
+
+  </select>
+
+  <select id="selectbycid" resultType="java.util.Map">
+    select cid,goods.id,goodsname,goodsprice,card.count as 'count',sizename,goodsimg,card.size
+    from goods
+    left join card on goods.id = card.gid
+    left join sizes on card.size = sizes.id
+    where gid = #{gid} and uid = #{uid} order by cid desc limit 0,1
+
+  </select>
 
 
 </mapper>

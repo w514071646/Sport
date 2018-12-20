@@ -38,5 +38,10 @@ public class CardController {
     public Result deleteCard(Integer cid){
         return cardService.updateStatus(cid);
     }
+    //直接购买
+    @GetMapping("/outrightpurchase")
+    public Result outrightPurchase(Card card) {
+        return cardService.buying(card);
+    }
 
 }

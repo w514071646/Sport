@@ -44,9 +44,9 @@ public class AddressController {
 
     //添加收货地址
     @PostMapping("/api/v1/savaAddress")
-    public Result savaAddress(Integer id){
+    public Result savaAddress(Address address){
 
-        return service.delById(id);
+        return service.add(address);
     }
 
 

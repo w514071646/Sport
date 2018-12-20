@@ -29,8 +29,21 @@ public class CardServiceImpl implements CardService {
         } else {
             vo = Result.error();
         }*/
+       int gid = card.getGid();
+       int uid = card.getUid();
+       Card record = cardMapper.selectbygid(gid,uid);
+       if( record != null){
+           int rcount = card.getCount();
+           int count = rcount + record.getCount();
+           System.out.println("coumt"+ count );
+           System.out.println("uid"+ + uid);
+           cardMapper.updatecounttt(count,uid,gid);
+           return Result.error(CodeMsg.SUCCESS);
+       } else {
+           return cardMapper.insertSelective(card) > 0 ? Result.error(CodeMsg.SUCCESS) : Result.error(CodeMsg.ERROR);
 
-        return cardMapper.insertSelective(card) > 0 ? Result.error(CodeMsg.SUCCESS) : Result.error(CodeMsg.ERROR);
+       }
+        //return cardMapper.insertSelective(card) > 0 ? Result.error(CodeMsg.SUCCESS) : Result.error(CodeMsg.ERROR);
     }
 
     @Override
@@ -54,4 +67,16 @@ public class CardServiceImpl implements CardService {
     public Result updateCount(Integer count, Integer cid) {
         return cardMapper.updatecount(count,cid) > 0 ? Result.error(CodeMsg.SUCCESS) : Result.error(CodeMsg.ERROR);
     }
+
+    @Override
+    public Result buying(Card card) {
+        if(cardMapper.insertSelective(card) > 0) {
+            Map map = cardMapper.selectbycid(card.getGid(), card.getUid());
+            System.out.println(map.get("cid"));
+            return Result.error(CodeMsg.SUCCESS);
+        } else {
+            return Result.error(CodeMsg.ERROR);
+        }
+    }
+
 }
